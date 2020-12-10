@@ -4,7 +4,7 @@
 
 def canUnlockAll(boxes):
     """ determines if all the boxes can be opened"""
-    if boxes is None:
+    if boxes[0] is None:
         return False
     res = []
     res.append(boxes[0])
