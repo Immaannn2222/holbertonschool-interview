@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 /**
- * insert_new - inserts a number into a sorted singly linked list
+ * insert_node - inserts a number into a sorted singly linked list
  * @head: pointer to the head of the list
  * @number: data to be entered
  *
@@ -27,7 +27,7 @@ while (tmp->next->n < number)
 {
 tmp = tmp->next;
 if (tmp->next == NULL)
-return (NULL);
+break;
 }
 
 new->next = tmp->next;
