@@ -30,6 +30,8 @@ try:
                     print("{}: {}".format(i, satus_code[i]))
 except KeyboardInterrupt:
     pass
-print('File size: {:d}'.format(file_size))
-for key in sorted(satus_code.keys()):
-    print("{}: {:d}".format(key, satus_code[key]))
+finally:
+    print('File size: {:d}'.format(file_size))
+    for key in sorted(satus_code.keys()):
+        if satus_code[key] > 0:
+            print("{}: {:d}".format(key, satus_code[key]))
