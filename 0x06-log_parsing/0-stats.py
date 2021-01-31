@@ -17,7 +17,7 @@ file_size = 0
 while True:
     try:
         for x, line in enumerate(sys.stdin, 1):
-            sp_line = line.split()
+            sp_line = line.strip().split()
             line_len = len(sp_line)
             file_size += int(sp_line[line_len - 1])
             status = sp_line[line_len - 2]
