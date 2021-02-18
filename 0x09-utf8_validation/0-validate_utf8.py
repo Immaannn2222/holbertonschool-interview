@@ -4,10 +4,9 @@
 
 def validUTF8(data):
     """determines if a given data set represents a valid UTF-8 encoding"""
-    for x in data:
-        f = x & 255
-    x = bytes(f).decode("UTF-8")
-    if x:
+    # use tne encode-decode
+    try:
+        bytes(x & 255 for x in data).decode("UTF-8")
         return True
-    else:
+    except Exception:
         return False
