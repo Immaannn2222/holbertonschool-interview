@@ -4,7 +4,7 @@ import sys
 
 
 if len(sys.argv) != 2:
-    print("Usage: nq N")
+    print("Usage: nqueens N")
     exit(1)
 
 if not sys.argv[1].isdigit():
