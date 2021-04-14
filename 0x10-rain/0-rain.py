@@ -6,12 +6,16 @@ Rain
 
 def rain(walls):
     """ calculate how much water will be retained after it rains"""
-    if walls == [] or len(walls) == 0:
+    if len(walls) == 0:
         return 0
-    retianed_water = 0
-    n_walls = len(walls)
-    for i in range(n_walls):
-        for j in range(i + 1, n_walls):
-            retianed_water = max(
-                retianed_water, min(walls[i], walls[j]) * (j - i - 1))
-    return retianed_water
+    retained_water = 0
+    left = 0
+    right = len(walls) - 1
+    while left < right:
+        retained_water = max(retained_water, min(
+            walls[left], walls[right]) * (right - left - 1))
+        if walls[left] < walls[right]:
+            left += 1
+        else:
+            right -= 1
+    return retained_water
