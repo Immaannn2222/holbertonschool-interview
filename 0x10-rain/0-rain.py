@@ -13,7 +13,7 @@ def rain(walls):
     right = len(walls) - 1
     while left < right:
         retained_water = max(retained_water, min(
-            walls[left], walls[right]) * (right - left - 1))
+            walls[left], walls[right]) * (right - left))
         if walls[left] < walls[right]:
             left += 1
         else:
