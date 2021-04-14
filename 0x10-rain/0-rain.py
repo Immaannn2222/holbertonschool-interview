@@ -6,7 +6,7 @@ Rain
 
 def rain(walls):
     """ calculate how much water will be retained after it rains"""
-    if len(walls) == 0:
+    if walls == [] or len(walls) == 0:
         return 0
     retianed_water = 0
     n_walls = len(walls)
