@@ -33,6 +33,7 @@ if (lefty < n && arr[lefty] > arr[largest])
 largest = lefty;
 if (right < n && arr[right] > arr[largest])
 largest = right;
+
 if (largest != i)
 {
 swap(&arr[i], &arr[largest]);
@@ -40,6 +41,7 @@ print_array(arr, size);
 operate_heap(arr, n, largest, size);
 }
 }
+
 
 
 /**
@@ -55,15 +57,18 @@ void heap_sort(int *arr, size_t size)
 {
 int i;
 
-if (size == 0)
+if (!arr)
 return;
 for (i = size / 2 - 1; i >= 0; i--)
 operate_heap(arr, size, i, size);
 
 for (i = size - 1; i > 0; i--)
 {
+
 swap(&arr[0], &arr[i]);
-operate_heap(arr, i, 0, size);
 print_array(arr, size);
+operate_heap(arr, size, i, 0);
 }
+swap(&arr[0], &arr[i]);
+operate_heap(arr, size, 0, size);
 }
