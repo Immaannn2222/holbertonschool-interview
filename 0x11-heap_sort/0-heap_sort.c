@@ -38,6 +38,7 @@ if (largest != i)
 swap(&arr[i], &arr[largest]);
 operate_heap(arr, n, largest);
 }
+print_array(arr, n);
 }
 
 
