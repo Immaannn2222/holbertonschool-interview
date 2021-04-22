@@ -20,11 +20,11 @@ int temp = *a;
 *@arr: the arr to arrange
 *@n: size of the arr
 *@i: random
-*
+*@size: the size of the array
 *Return: void
 */
 
-void operate_heap(int arr[], int n, int i)
+void operate_heap(int arr[], int n, int i, size_t size)
 {
 int largest = i;
 int lefty = 2 * i + 1;
@@ -36,9 +36,9 @@ largest = right;
 if (largest != i)
 {
 swap(&arr[i], &arr[largest]);
-operate_heap(arr, n, largest);
+print_array(arr, size);
+operate_heap(arr, n, largest, size);
 }
-print_array(arr, n);
 }
 
 
@@ -58,12 +58,12 @@ int i;
 if (size == 0)
 return;
 for (i = size / 2 - 1; i >= 0; i--)
-operate_heap(arr, size, i);
+operate_heap(arr, size, i, size);
 
 for (i = size - 1; i > 0; i--)
 {
 swap(&arr[0], &arr[i]);
-operate_heap(arr, i, 0);
+operate_heap(arr, i, 0, size);
 print_array(arr, size);
 }
 }
