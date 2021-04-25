@@ -24,25 +24,24 @@ int temp = *a;
 *Return: void
 */
 
-void operate_heap(int arr[], int n, int i, size_t size)
+void operate_heap(int arr[], int n, size_t size, int i)
 {
 int largest = i;
 int lefty = 2 * i + 1;
-int right = 2 * i + 2;
+int righty = 2 * i + 2;
+
 if (lefty < n && arr[lefty] > arr[largest])
 largest = lefty;
-if (right < n && arr[right] > arr[largest])
-largest = right;
+if (righty < n && arr[righty] > arr[largest])
+largest = righty;
 
 if (largest != i)
 {
 swap(&arr[i], &arr[largest]);
 print_array(arr, size);
-operate_heap(arr, n, largest, size);
+operate_heap(arr, n, size, largest);
 }
 }
-
-
 
 /**
  *heap_sort - sorts an arr of integers ascendingly
@@ -56,19 +55,17 @@ operate_heap(arr, n, largest, size);
 void heap_sort(int *arr, size_t size)
 {
 int i;
-
 if (!arr)
 return;
 for (i = size / 2 - 1; i >= 0; i--)
-operate_heap(arr, size, i, size);
+operate_heap(arr, size, size, i);
 
 for (i = size - 1; i > 0; i--)
 {
-
 swap(&arr[0], &arr[i]);
 print_array(arr, size);
-operate_heap(arr, size, i, 0);
+operate_heap(arr, i, size, 0);
 }
 swap(&arr[0], &arr[i]);
-operate_heap(arr, size, 0, size);
+operate_heap(arr, i, size, 0);
 }

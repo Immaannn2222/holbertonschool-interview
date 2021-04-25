@@ -6,7 +6,7 @@
 
 void print_array(const int *array, size_t size);
 void heap_sort(int *array, size_t size);
-void operate_heap(int arr[], int n, int i, size_t size);
+void operate_heap(int arr[], int n, size_t size, int i);
 void swap(int *a, int *b);
 
 #endif
