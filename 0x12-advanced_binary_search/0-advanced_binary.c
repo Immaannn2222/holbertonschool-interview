@@ -8,16 +8,15 @@
 * @size: Number of elements in @array
 * @i: posution of the print
 */
-void print_array(const int *array, size_t size, size_t i)
+void print_array(int *array, size_t i, size_t size)
 {
-while (array && i < size)
-{
+if (i > size)
+return;
 printf("%d", array[i]);
+if (i < size)
 printf(", ");
-++i;
+print_array(array, i + 1, size);
 }
-}
-
 
 
 /**
@@ -40,7 +39,7 @@ return (-1);
 while (bottom <= highest)
 {
 printf("Searching in array: ");
-print_array(array, size, bottom);
+print_array(array, bottom, highest);
 printf("\n");
 
 m = (bottom + highest) / 2;
