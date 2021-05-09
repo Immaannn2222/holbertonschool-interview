@@ -3,7 +3,7 @@
 import requests
 
 
-def count_words(subreddit, word_list, count_dict={}, after=""):
+def count_words(subreddit, word_list,after="", count_dict={}):
     """recursive function that queries the Reddit API"""
     if len(count_dict) <= 0:
         for item in word_list:
@@ -33,6 +33,6 @@ def count_words(subreddit, word_list, count_dict={}, after=""):
             for word in word_list:
                 count_dict[word.lower()] += title.count(
                     word.lower())
-        count_words(subreddit, word_list, count_dict, after)
+        count_words(subreddit, word_list, after, count_dict)
     else:
         return None
