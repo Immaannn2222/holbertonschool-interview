@@ -33,6 +33,6 @@ def count_words(subreddit, word_list, count_dict={}, after=""):
             for word in word_list:
                 count_dict[word.lower()] += title.count(
                     word.lower())
-        count_words(subreddit, word_list, count_dict, after)
     else:
         return None
+    count_words(subreddit, word_list, count_dict, after)
