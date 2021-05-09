@@ -10,11 +10,11 @@ def count_words(subreddit, word_list, count_dict={}, after=""):
             count_dict[item.lower()] = 0
 
     if after is None:
-        sorted_count_dict = dict(sorted(
+        sorted_dict = dict(sorted(
             count_dict.items(),
             key=lambda x: (-x[1], x[0])
             ))
-        for k, v in sorted_count_dict.items():
+        for k, v in sorted_dict.items():
             if v > 0:
                 print("{}: {}".format(k, v))
         return None
@@ -23,8 +23,7 @@ def count_words(subreddit, word_list, count_dict={}, after=""):
         subreddit)
     resp = requests.get(url, headers=h, params={
         'limit': 100,
-        'after': after
-    })
+        'after': after}, allow_redirects=False)
     if resp.status_code == 200:
         after = resp.json().get("data").get("after")
         children = resp.json().get("data").get("children")
