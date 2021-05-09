@@ -3,43 +3,51 @@
 import requests
 
 
-def count_words(subreddit, word_list, after="", count_dict={}):
+def count_words(subreddit, word_list):
     """recursive function that queries the Reddit API"""
-    if len(count_dict) <= 0:
-        for item in word_list:
-            count_dict[item.lower()] = 0
+    word_list = [str.lower() for str in word_list]
 
-    if after is None:
-        sorted_dict = dict(sorted(
-            count_dict.items(),
-            key=lambda x: (-x[1], x[0])
-            ))
-        for k, v in sorted_dict.items():
-            if v > 0:
-                print("{}: {}".format(k, v))
-        return None
-    url = "https://api.reddit.com/r/{}/hot".format(subreddit)
-    params = {'limit': 100, 'after': after}
-    headers = {'user-agent': 'xxxx'}
-    response = requests.get(url, headers=headers,
-                            params=params, allow_redirects=False)
+    my_list = list_t(subreddit)
+    my_dict = {}
 
-    if response.status_code != 200:
-        return None
+    for word in word_list:
+        my_dict[word] = 0
     try:
-        j_resp = response.json()
-    except ValueError:
-        return None
-    try:
-        data = j_resp.get("data")
-        after = data.get("after")
-        posts = data.get("children")
-        for child in posts:
-            core = child.get("data")
-            title = (core.get("title").lower()).split()
-            for w in word_list:
-                count_dict[w] += title.count(w.lower())
+        for title in my_list:
+            title_split = title.split()
+
+            for x in title_split:
+                for x_split in word_list:
+                    if x.lower() == x_split.lower():
+                        my_dict[x_split] += 1
+
+        for key, val in sorted(my_dict.items(), key=lambda x: x[1],
+                               reverse=True):
+            if val != 0:
+                print("{}: {}".format(key, val))
     except Exception:
         return None
 
-    count_words(subreddit, word_list, after, count_dict)
+
+def list_t(subreddit, my_list=[], after=None):
+    """function that return all popular posts from reddit"""
+    headers = {'User-agent': 'xxxx'}
+    url = "https://www.reddit.com/r/{}/hot.json".format(subreddit)
+
+    parameters = {'after': after}
+    res = requests.get(url, headers=headers, allow_redirects=False,
+                       params=parameters)
+    if res.status_code == 200:
+        prox = res.json().get('data').get('after')
+        if prox is not None:
+            list_t(subreddit, my_list, prox)
+    else:
+        return None
+    try:
+        dic_json = res.json()
+        for title_ in dic_json['data']['children']:
+            my_list.append(title_['data']['title'])
+
+        return my_list
+    except Exception:
+        return None
