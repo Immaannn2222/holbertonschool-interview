@@ -24,7 +24,9 @@ def count_words(subreddit, word_list, count_dict={}, after=""):
     resp = requests.get(url, headers=h, params={
         'limit': 100,
         'after': after}, allow_redirects=False)
-    if resp.status_code == 200:
+    if resp.status_code != 200:
+        return None
+    try:
         after = resp.json().get("data").get("after")
         children = resp.json().get("data").get("children")
         for post in children:
@@ -33,6 +35,6 @@ def count_words(subreddit, word_list, count_dict={}, after=""):
             for item in word_list:
                 count_dict[item.lower()] += title.count(
                     item.lower())
-        count_words(subreddit, word_list, count_dict, after)
-    else:
+    except Exception:
         return None
+    count_words(subreddit, word_list, count_dict, after)
