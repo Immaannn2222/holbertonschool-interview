@@ -3,7 +3,7 @@
 import requests
 
 
-def count_words(subreddit, word_list,after="", count_dict={}):
+def count_words(subreddit, word_list, after="", count_dict={}):
     """recursive function that queries the Reddit API"""
     if len(count_dict) <= 0:
         for item in word_list:
@@ -24,15 +24,22 @@ def count_words(subreddit, word_list,after="", count_dict={}):
     response = requests.get(url, headers=headers,
                             params=params, allow_redirects=False)
 
-    if response.status_code == 200:
-        after = response.json().get("data").get("after")
-        posts = response.json().get("data").get("children")
-        for child in posts:
-            title = child.get("data").get(
-                "title").lower().split(" ")
-            for word in word_list:
-                count_dict[word.lower()] += title.count(
-                    word.lower())
-        count_words(subreddit, word_list, after, count_dict)
-    else:
+    if response.status_code != 200:
         return None
+    try:
+        j_resp = response.json()
+    except ValueError:
+        return None
+    try:
+        data = j_resp.get("data")
+        after = data.get("after")
+        posts = data.get("children")
+        for child in posts:
+            core = child.get("data")
+            title = (core.get("title").lower()).split()
+            for w in word_list:
+                count_dict[w] += title.count(w.lower())
+    except Exception:
+        return None
+
+    count_words(subreddit, word_list, after, count_dict)
