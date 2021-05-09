@@ -18,23 +18,21 @@ def count_words(subreddit, word_list, count_dict={}, after=""):
             if v > 0:
                 print("{}: {}".format(k, v))
         return None
-    h = {'user-agent': 'xxxx'}
-    url = 'https://api.reddit.com/r/{}/hot.json'.format(
-        subreddit)
-    resp = requests.get(url, headers=h, params={
-        'limit': 100,
-        'after': after}, allow_redirects=False)
-    if resp.status_code != 200:
-        return None
-    try:
-        after = resp.json().get("data").get("after")
-        children = resp.json().get("data").get("children")
-        for post in children:
-            title = post.get("data").get(
+    url = "https://api.reddit.com/r/{}/hot".format(subreddit)
+    params = {'limit': 100, 'after': after}
+    headers = {'user-agent': 'xxxx'}
+    response = requests.get(url, headers=headers,
+                            params=params, allow_redirects=False)
+
+    if response.status_code == 200:
+        after = response.json().get("data").get("after")
+        posts = response.json().get("data").get("children")
+        for child in posts:
+            title = child.get("data").get(
                 "title").lower().split(" ")
-            for item in word_list:
-                count_dict[item.lower()] += title.count(
-                    item.lower())
-    except Exception:
+            for word in word_list:
+                count_dict[word.lower()] += title.count(
+                    word.lower())
+        count_words(subreddit, word_list, count_dict, after)
+    else:
         return None
-    count_words(subreddit, word_list, count_dict, after)
