@@ -27,5 +27,8 @@ typedef struct binary_tree_s binary_tree_t;
 typedef struct binary_tree_s heap_t;
 int heap_extract(heap_t **root);
 void binary_tree_print(const binary_tree_t *);
+int get_size(heap_t *root);
+void arr_convert(heap_t **array, heap_t *root, int x);
+void reconstruct_heap(heap_t *node);
 
 #endif
