@@ -1,5 +1,4 @@
 #include "binary_trees.h"
-
 /**
 * heap_extract - extracts the root node of a Max Binary Heap
 * @root: double pointer to the root node of the heap
@@ -53,7 +52,7 @@ int get_size(heap_t *root)
 if (!root)
 return (0);
 else
-return (taille_arb(root->left) + 1 + taille_arb(root->right));
+return (get_size(root->left) + 1 + get_size(root->right));
 }
 
 /**
