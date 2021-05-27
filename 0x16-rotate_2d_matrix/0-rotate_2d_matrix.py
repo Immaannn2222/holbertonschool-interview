@@ -5,5 +5,7 @@
 def rotate_2d_matrix(matrix):
     """rotate n x n 2D mmatrix 90 degrees clockwise"""
     new = list(zip(*matrix[::-1]))
+    print(new)
     matrix.clear()
-    matrix.append(new)
+    for i in range(len(new)):
+        matrix.append((list(new[i])))
