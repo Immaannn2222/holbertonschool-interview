@@ -18,10 +18,10 @@ def isWinner(x, nums):
     for k in range(len(prime_y)):
         if prime_y[k]:
             counter += 1
-        prime_y[i] = counter
+        prime_y[k] = counter
     contester = 0
-    for n in nums:
-        contester += prime_y[n] % 2 == 1
+    for m in nums:
+        contester += prime_y[m] % 2 == 1
     if contester * 2 == len(nums):
         return None
     if contester * 2 > len(nums):
