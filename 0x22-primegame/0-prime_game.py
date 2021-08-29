@@ -4,26 +4,26 @@
 
 def isWinner(x, nums):
     """Game decider between Ben and """
-    if x < len(nums) or x < 1:
+    if not nums or x < 1:
         return None
     m = max(nums)
-    prime = [True for _ in range(max(m + 1, 2))]
+    prime_y = [True for _ in range(max(m + 1, 2))]
     for i in range(2, int(pow(m, 0.5)) + 1):
-        if not prime[i]:
+        if not prime_y[i]:
             continue
         for j in range(i * i, m + 1, i):
-            prime[j] = False
-    prime[0] = prime[1] = False
-    x = 0
-    for k in range(len(prime)):
-        if prime[k]:
-            k += 1
-        prime[i] = k
-    contester_m = 0
+            prime_y[j] = False
+    prime_y[0] = prime_y[1] = False
+    counter = 0
+    for k in range(len(prime_y)):
+        if prime_y[k]:
+            counter += 1
+        prime_y[i] = counter
+    contester = 0
     for n in nums:
-        contester_m += prime[n] % 2 == 1
-    if contester_m * 2 == len(nums):
+        contester += prime_y[n] % 2 == 1
+    if contester * 2 == len(nums):
         return None
-    if contester_m * 2 < len(nums):
-        return "Ben"
-    return "Maria"
+    if contester * 2 > len(nums):
+        return "Maria"
+    return "Ben"
